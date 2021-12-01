@@ -21,19 +21,17 @@ class Main {
 
 	private static void partTwo() {
 		try (Scanner sc = new Scanner(System.in)) {
-			int c = 0, m[] = new int[] { sc.nextInt(), sc.nextInt(), sc.nextInt() };
+			int s = 0, a = sc.nextInt(), b = sc.nextInt(), c = sc.nextInt();
 			while (sc.hasNextInt()) {
-				int tmp = m[0];
-				m[0] = m[1];
-				m[1] = m[2];
-				m[2] = sc.nextInt();
-				
-				
+				int tmp = a;
+				a = b;
+				b = c;
+				c = sc.nextInt();
 
-				if (tmp + m[0] + m[1] < m[0] + m[1] + m[2])
-					c++;
+				if (tmp + a + b < a + b + c)
+					s++;
 			}
-			System.out.println(c);
+			System.out.println(s);
 		}
 	}
 }
