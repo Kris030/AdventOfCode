@@ -1,7 +1,18 @@
 #!/bin/bash
 
 d=$(dirname $0)
-day=$($d/../day)
+
+[[ -n $1 ]] && {
+	p=$(printf %02d "$1") &&
+	  (( $p >= 1)) &&
+	  (( $p <= 31 )) ||
+	  { echo 'Not a valid day'; exit; }
+}
+
+day=${p:-$($d/../day)}
 i="$d/inputs/$day"
-! [ -f "$i" ] && wget "adventofcode.com/2021/day/$day/input" # FIXME oauth...
+! [ -f "$i" ] && {
+	wget -q "adventofcode.com/2021/day/$day/input" &> /dev/null || # FIXME oauth...
+		{ echo "Couldn't download input"; exit; }
+}
 cat "$i"
