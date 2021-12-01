@@ -12,7 +12,9 @@ d=$(dirname $0)
 day=${p:-$($d/../day)}
 i="$d/inputs/$day"
 ! [ -f "$i" ] && {
-	wget -q "adventofcode.com/2021/day/$day/input" &> /dev/null || # FIXME oauth...
-		{ echo "Couldn't download input"; exit; }
+	wget --load-cookies "$d/../.config/cookies.txt" \
+	     "adventofcode.com/2021/day/$(printf %d $day)/input" \
+	     -O "$i" -q &> /dev/null ||
+	     	{ echo "Couldn't download input"; exit; }
 }
 cat "$i"
