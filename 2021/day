@@ -1,1 +1,3 @@
-2
+#!/bin/bash
+[ $(date +%m) = 12 ] && echo $(date +%d) || echo 31
+
