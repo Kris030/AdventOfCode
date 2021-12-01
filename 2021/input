@@ -1,7 +1,7 @@
 #!/bin/bash
 
 d=$(dirname $0)
-day=$($d/day)
+day=$($d/../day)
 i="$d/inputs/$day"
 ! [ -f "$i" ] && wget "adventofcode.com/2021/day/$day/input" # FIXME oauth...
 cat "$i"
