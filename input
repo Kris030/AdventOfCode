@@ -20,8 +20,8 @@ while (( $# > 0 )) ; do case $1 in
 	-y | --year )
 		shift;
 		
-		(( $1 >= 2015 )) && (( $1 <= $cyear )) ||
-			{ echo "Year has to a number between 2015 and $cyear."; exit; }
+		(( $1 >= 2015 )) ||
+			{ echo "Year has to a number greater than 2015 (first Advent of Code)."; exit; }
 
 		year=$(printf %d $1)
 		;;
@@ -34,14 +34,14 @@ esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
 
 [[ -z "$day" ]] && {
-	(( $cmonth = 12 )) && day=$cday ||
+	[[ $cmonth = 12 ]] && day=$cday ||
 		{ echo "It's not december and no day was specified."; exit; }
 }
 
-[[ ${year:=$cyear} = $cyear ]] && {
-	[[ $cmonth = 12 ]] && (( $day <= $cday )) || 
-		{ echo "Impatient, aren't we?"; exit; }
-}
+: ${year:=$cyear}
+
+[[ $cmonth = 12 ]] && (( $day <= $cday )) && (( $year <= $cyear )) || 
+	{ echo "Impatient, aren't we?"; exit; }
 
 i="$d/$year/inputs"
 [ -d "$i" ] || mkdir -p "$i"
@@ -50,7 +50,7 @@ i="$i/$day"
 	wget --load-cookies "$d/.config/cookies.txt" \
 	     "adventofcode.com/$year/day/$(printf %d $day)/input" \
 	     -O "$i" -q &> /dev/null ||
-	     	{ echo "Couldn't download input"; exit; }
+	     	{ echo "Couldn't download input"; rm -r "$i"; exit; }
 }
 cat "$i"
 
