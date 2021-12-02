@@ -7,7 +7,7 @@ cmonth=$(date +%m)
 cday=$(date +%d)
 
 while (( $# > 0 )) ; do case $1 in
-	
+
 	-d | --day )
 		shift;
 		
@@ -25,17 +25,18 @@ while (( $# > 0 )) ; do case $1 in
 
 		year=$(printf %d $1)
 		;;
+
 	* )
 		echo "Invalid argument '$1'"
 		exit
 		;;
 
 esac; shift; done
-if [[ "$1" == '--' ]]; then shift; fi
+[[ "$1" == '--' ]] && shift
 
 [[ -z "$day" ]] && {
 	[[ $cmonth = 12 ]] && day=$cday ||
-		{ echo "It's not december and no day was specified."; exit; }
+		{ echo "Can't guess day (it's not advent and no day was specified)."; exit; }
 }
 
 : ${year:=$cyear}
@@ -50,7 +51,6 @@ i="$i/$day"
 	wget --load-cookies "$d/.config/cookies.txt" \
 	     "adventofcode.com/$year/day/$(printf %d $day)/input" \
 	     -O "$i" -q &> /dev/null ||
-	     	{ echo "Couldn't download input"; rm -r "$i"; exit; }
+	    	 { echo "Couldn't download input"; rm -r "$i"; exit; }
 }
 cat "$i"
-
