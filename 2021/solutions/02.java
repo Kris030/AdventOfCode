@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
-class Main {
+class Day02 {
 
 	public static void main(String[] args) {
 		partTwo();
 	}
 	
-	private static void partOne() {
+	public static void partOne() {
 		try (Scanner sc = new Scanner(System.in)) {
 			int hpos = 0, depth = 0;
 			
@@ -25,7 +25,7 @@ class Main {
 		}
 	}
 
-	private static void partTwo() {
+	public static void partTwo() {
 		try (Scanner sc = new Scanner(System.in)) {
 			int hpos = 0, depth = 0, aim = 0;
 			
