@@ -48,7 +48,7 @@ i="$d/$year/inputs"
 i="$i/$day"
 ! [ -f "$i" ] && {
 	wget --load-cookies "$d/.config/cookies.txt" \
-	     "adventofcode.com/$year/day/$day/input" \
+	     "adventofcode.com/$year/day/$(printf %d $day)/input" \
 	     -O "$i" -q &> /dev/null ||
 	     	{ echo "Couldn't download input"; exit; }
 }
