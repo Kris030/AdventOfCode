@@ -1,0 +1,56 @@
+#!/bin/bash
+
+d=$(dirname $0)
+
+cyear=$(date +%Y)
+cmonth=$(date +%m)
+cday=$(date +%d)
+
+while (( $# > 0 )) ; do case $1 in
+	
+	-d | --day )
+		shift;
+		
+	 	(( $1 >= 1)) && (( $1 <= 31 )) ||
+			{ echo 'Day has to a number between 1 and 31.'; exit; }
+		
+		day=$(printf %02d $1)
+		;;
+
+	-y | --year )
+		shift;
+		
+		(( $1 >= 2015 )) && (( $1 <= $cyear )) ||
+			{ echo "Year has to a number between 2015 and $cyear."; exit; }
+
+		year=$(printf %d $1)
+		;;
+	* )
+		echo "Invalid argument '$1'"
+		exit
+		;;
+
+esac; shift; done
+if [[ "$1" == '--' ]]; then shift; fi
+
+[[ -z "$day" ]] && {
+	(( $cmonth = 12 )) && day=$cday ||
+		{ echo "It's not december and no day was specified."; exit; }
+}
+
+[[ ${year:=$cyear} = $cyear ]] && {
+	[[ $cmonth = 12 ]] && (( $day <= $cday )) || 
+		{ echo "Impatient, aren't we?"; exit; }
+}
+
+i="$d/$year/inputs"
+[ -d "$i" ] || mkdir -p "$i"
+i="$i/$day"
+! [ -f "$i" ] && {
+	wget --load-cookies "$d/.config/cookies.txt" \
+	     "adventofcode.com/$year/day/$day/input" \
+	     -O "$i" -q &> /dev/null ||
+	     	{ echo "Couldn't download input"; exit; }
+}
+cat "$i"
+
