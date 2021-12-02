@@ -9,6 +9,8 @@ d=$(dirname $0)
 	  { echo 'Not a valid day'; exit; }
 }
 
+[ -d "$d/inputs" ] || mkdir "$d/inputs"
+
 day=${p:-$($d/../day)}
 i="$d/inputs/$day"
 ! [ -f "$i" ] && {
