@@ -4,14 +4,14 @@ d=$(dirname $0)
 
 cyear=$(date +%Y)
 cmonth=$(date +%m)
-cday=$(date +%d)
+cday=$(TZ='UTC+5' date +%d)
 
 while (( $# > 0 )) ; do case $1 in
 
 	-d | --day )
 		shift;
 		
-	 	(( $1 >= 1)) && (( $1 <= 25 )) ||
+	 	(( $1 >= 1 )) && (( $1 <= 25 )) ||
 			{ echo 'Day has to a number between 1 and 25.'; exit; }
 		
 		day=$(printf %02d $1)
@@ -21,9 +21,13 @@ while (( $# > 0 )) ; do case $1 in
 		shift;
 		
 		(( $1 >= 2015 )) ||
-			{ echo "Year has to a number greater than 2015 (first Advent of Code)."; exit; }
+			{ echo 'Year has to a number greater than 2015 (first Advent of Code).'; exit; }
 
 		year=$(printf %d $1)
+		;;
+
+	-h | --help )
+		# TODO
 		;;
 
 	* )
@@ -49,8 +53,8 @@ i="$d/$year/inputs"
 i="$i/$day"
 ! [ -f "$i" ] && {
 	wget --load-cookies "$d/.config/cookies.txt" \
-	     "adventofcode.com/$year/day/$(printf %d $day)/input" \
+	     "https://adventofcode.com/$year/day/$(printf %d $day)/input" \
 	     -O "$i" -q &> /dev/null ||
-	    	 { echo "Couldn't download input"; rm -r "$i"; exit; }
+	    	 { echo "Couldn't download input"; rm -rf "$i"; exit; }
 }
 cat "$i"
