@@ -2,8 +2,8 @@
 
 d=$(dirname $0)
 
-cyear=$(date +%Y)
-cmonth=$(date +%m)
+cyear=$(TZ='UTC+5' date +%Y)
+cmonth=$(TZ='UTC+5' date +%m)
 cday=$(TZ='UTC+5' date +%d)
 
 while (( $# > 0 )) ; do case $1 in
