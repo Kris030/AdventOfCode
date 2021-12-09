@@ -4,34 +4,42 @@ d=$(dirname $0)
 
 cyear=$(TZ='UTC+5' date +%Y)
 cmonth=$(TZ='UTC+5' date +%m)
+cmonth=${cmonth#0}
 cday=$(TZ='UTC+5' date +%d)
+cday=${cday#0}
 
 while (( $# > 0 )) ; do case $1 in
 
 	-d | --day )
-		shift;
+		shift
 		
 	 	(( $1 >= 1 )) && (( $1 <= 25 )) ||
 			{ echo 'Day has to a number between 1 and 25.'; exit; }
 		
-		day=$(printf %02d $1)
+		day=$1
 		;;
 
 	-y | --year )
-		shift;
+		shift
 		
 		(( $1 >= 2015 )) ||
 			{ echo 'Year has to a number greater than 2015 (first Advent of Code).'; exit; }
 
-		year=$(printf %d $1)
+		year=$1
 		;;
 
 	-h | --help )
-		# TODO
+		echo 'Usage: input [-yd]'
+		echo 'Get the input for the given day of Advent of Code'
+		echo
+		echo '-y, --year   set the year to use'
+		echo '-d, --day    set the day to use'
+		
+		exit
 		;;
 
 	* )
-		echo "Invalid argument '$1'"
+		echo "Invalid argument '$1'. Use input -h to see options."
 		exit
 		;;
 
@@ -58,3 +66,4 @@ i="$i/$day"
 	    	 { echo "Couldn't download input"; rm -rf "$i"; exit; }
 }
 cat "$i"
+
