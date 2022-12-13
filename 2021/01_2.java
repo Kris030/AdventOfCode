@@ -1,25 +1,7 @@
 import java.util.Scanner;
 
 class Day01 {
-
 	public static void main(String[] args) {
-		partTwo();
-	}
-	
-	public static void partOne() {
-		try (Scanner sc = new Scanner(System.in)) {
-			int last = sc.nextInt(), c = 0;
-			while (sc.hasNextInt()) {
-				int curr = sc.nextInt();
-				if (curr > last)
-					c++;
-				last = curr;
-			}
-			System.out.println(c);
-		}
-	}
-
-	public static void partTwo() {
 		try (Scanner sc = new Scanner(System.in)) {
 			int s = 0, a = sc.nextInt(), b = sc.nextInt(), c = sc.nextInt();
 			while (sc.hasNextInt()) {
@@ -35,4 +17,3 @@ class Day01 {
 		}
 	}
 }
-
